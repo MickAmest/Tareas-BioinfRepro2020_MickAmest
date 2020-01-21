@@ -1,0 +1,38 @@
+# Miguel Amaro 16/01/2020
+## Tarea 1.2
+### Primera pregunta
+grep -oE "Ph\w+ \w+" tomatesverdes.fasta
+### Segunda pregunta
+cat tomatesverdes.fasta jitomate.fasta | grep -oE ">gi\|\w+\|gb\|\w+\.1\|" > secsIDs.txt
+### Tercera pregunta
+history | grep less
+### Cuarta pregunta
+grep -oE "\w+_\w+" nuevos_final.fam > nombres_muestras.txt
+### Quinta pregunta
+for dir in PobA PobB PobC PobD; do mkdir $dir; done
+
+for dir in PobA PobB PobC PobD; do touch $dir/$dir.txt; done
+### Sexta pregunta
+Un comentario para humanos
+### Séptima pregunta
+Absoluto
+### Octava pregunta
+cd ~
+### Novena pregunta
+cat, less, head, more, tail
+### Décima pregunta
+ls -l
+ls -lh
+### Onceava pregunta
+ls *.fs
+### Doceava pregunta
+cp Neg* ../
+### Treceava pregunta
+Ctrl + C
+### Catorceava pregunta
+La principal diferencia sería que un un script los comandos van en orden y
+las acciones que realiza la computadora son más fáciles de reproducir y
+verificar, mientras que si los comandos se escriben directamente en la terminal
+es difícil corregirlos y volver a realizar exactamente lo mismo.
+### Quinceava pregunta
+mv Danaus_plexippus.txt monarca.txt
