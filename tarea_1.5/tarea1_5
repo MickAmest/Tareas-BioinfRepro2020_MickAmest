@@ -1,0 +1,14 @@
+# Pregunta 1
+ls -lSh Unidad1/Prac_Uni1/Maiz
+
+# Pregunta 2
+-p
+
+# Pregunta 4
+curl "https://github.com/u-genoma/BioinfinvRepro/blob/master/Unidad1/Prac_Uni1/example_script_runadmixture.sh" > admixture.sh
+
+# Pregunta 5
+sed 's/Solanum lycopersicum/jitomate/g' Tomates/tomates.fasta > Tomates/edited_tomates.fasta
+
+# Pregunta 6
+ls | wc -l
