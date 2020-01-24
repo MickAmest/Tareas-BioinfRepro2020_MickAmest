@@ -1,0 +1,31 @@
+---
+title: "Tarea3_4"
+author: "Miguel Amaro"
+date: "24/1/2020"
+output: html_document
+---
+
+### Script para hacer un barplot de número de reads por muestra, con títulos en los ejes y coloreando por librería.
+#### Miguel Amaro, 2020
+
+Cambiar paleta de colores
+
+```{r}
+palette(c("cadetblue", "blueviolet", "chartreuse4"))
+```
+
+
+Cargar datos utilizando ruta relativa desde la carpeta **bin** de **ejemplos generales**
+
+```{r}
+reads <- read.delim("../data/reads.txt")
+```
+
+
+Generar gráfico, coloreando por librería y poniendo títulos a ejes y título al gráfico
+
+```{r}
+reads_graf <- barplot(reads$nreads, names.arg = reads$Library, 
+                      xlab = "Librería", ylab = "Número de reads",
+                      col = reads$Library, main = "Número de reads por librería")
+```
