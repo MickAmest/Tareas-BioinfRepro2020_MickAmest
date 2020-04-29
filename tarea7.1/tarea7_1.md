@@ -1,3 +1,6 @@
+## Tarea 7.1: Análisis de expresión diferencial usando microarreglos.
+#### José Miguel Amaro Estrada
+
 ### Preliminares
 
 Se realizó un muestreo aleatorio de 5000 filas del archivo de datos original. Para esto se utilizó la libreria dplyr.
