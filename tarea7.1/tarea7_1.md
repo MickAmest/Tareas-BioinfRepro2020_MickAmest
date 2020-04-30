@@ -223,7 +223,7 @@ results$GeneID <- results$EntrezID
 
  ```
  Probes.DE <- results[, c("FDR.Geno", "FDR.Trt", "FDR.Int")]  <= fdr_th
- Genes.DE  <- apply(Probes.DE, 2, tapply, results$GeneID, any)
+ Genes.DE  <- apply(Probes.DE, 2, tapply, results$GeneID, all)
  ```
 
 
@@ -234,7 +234,7 @@ Usando solo las sondas seleccionadas por efectos de interacción, se contaron la
 Probes.Int_Geno <- results[results$FDR.Int <= fdr_th,
                             c("FDR.Geno_I", "FDR.Geno_C")] <= fdr_th
  Genes.Int_Geno  <- apply(Probes.Int_Geno, 2, tapply,
-                          results$GeneID[results$FDR.Int <= fdr_th], any)
+                          results$GeneID[results$FDR.Int <= fdr_th], all)
 ```
 Usando solamente sondas seleccionadas por efectos de interacción, se contaron las sondas significativas para el efecto de tratamiento en ratones del genotipo B y/o del genotipo BY.
 
@@ -242,7 +242,7 @@ Usando solamente sondas seleccionadas por efectos de interacción, se contaron l
 Probes.Int_Trt  <- results[results$FDR.Int <= fdr_th,
                             c("FDR.Trt_B", "FDR.Trt_BY")]  <= fdr_th
  Genes.Int_Trt   <- apply(Probes.Int_Trt, 2, tapply,
-                          results$GeneID[results$FDR.Int <= fdr_th], any)
+                          results$GeneID[results$FDR.Int <= fdr_th], all)
 
 ```
 
