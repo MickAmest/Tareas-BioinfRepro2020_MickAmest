@@ -1,6 +1,6 @@
 # Tarea 7.2: Análisis funcional de datos de microarreglos
 ## Particionamiento
-Partir del objeto normdata creado en la tarea 7.1.
+Partir del objeto `normdata` creado en la tarea 7.1.
 
 ```mydata <- normdata```
 
@@ -11,6 +11,8 @@ design <- read.csv("YChrom_design.csv")
 colnames(mydata) <- design$Group
 ```
 #### Determinar el número de grupos
+Para determinar el número de clusters, se realizó una gráfica de suma de cuadrados.
+
 ```
 wss <- (nrow(mydata)-1)*sum(apply(mydata,2,var))
 for (i in 2:15) wss[i] <- sum(kmeans(mydata,
@@ -23,6 +25,7 @@ plot(1:15, wss, type="b", xlab="Number of Clusters",
 ![imagen](./output/clusters.png)
 
 #### K-Means Cluster Analysis
+De acuerdo con la gráfica de suma de cuadrados se seleccionó un total de 5 clusters para el análisis de k-means, ya que es a partir de este valor que se observa un cambio abrupto en la gŕafica.
 ```
 fit <- kmeans(mydata, 5) # 5 cluster solution
 # get cluster means
@@ -54,7 +57,10 @@ dev.off()
 ```
 ![figura 1](./output/hier_clusters.png)
 
+De acuerdo con el cluster jerárquico se observa que, por un lado, hay un agrupamiento por genotipo BY, el cual a su vez se agrupa por tratamiento y por control. Por otro lado, el genotipo B se separa de la misma manera, entre los control y los experimentales. Sin embargo, en este caso se observa un par de casos en los que un par de muestras del genotipo BY para el grupo control, se agrupa junto con el control del genotipo B. Es decir, el principal agrupamiento se da, en general, por genotipo y, dentro de cada genotipo, por tratamiento.
+
 ### Generación de gráficos
+Finalmente, se generó el gráfico con los clusters, para visualizar el agrupamiento. 
 ```
 fit <- kmeans (mydata, 5)
 

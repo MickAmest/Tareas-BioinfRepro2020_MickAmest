@@ -322,7 +322,7 @@ resultFisher.classic <- runTest(GOdata, algorithm = "classic", statistic = "fish
  ```
 ### Conclusiones
 
-De acuerdo con los resultados, se obtuvieron 647 genes expresados diferencialmente, de los cuales 383 tuvieron una respuesta por genotipo y 372 por tratamiento, mientras que 26 mostraron un efecto de interacción.
+De acuerdo con los resultados, se obtuvieron 824 genes expresados diferencialmente, de los cuales 383 tuvieron una respuesta por genotipo y 372 por tratamiento, mientras que 26 mostraron un efecto de interacción.
 
 ![figura 1](./output/vennDiagram_DiffExprs.png)
 
