@@ -1,0 +1,145 @@
+
+# Summary table 
+
+Name , Value
+Genome , GRCh37.75 
+Date , 2020-04-22 23:40
+SnpEff_version , SnpEff 4.3p (build 2017-06-06 09:55), by Pablo Cingolani
+Command_line_arguments , SnpEff  -csvStats S19.csv GRCh37.75 S19_FILTER_VARIANTS.vcf 
+Warnings , 4 
+Number_of_lines_in_input_file, 9
+Number_of_variants_before_filter, 9
+Number_of_not_variants , 0
+Number_of_variants_processed , 9
+Number_of_known_variants (i.e. non-empty ID) , 9, 100% 
+Number_of_effects , 62 
+Genome_total_length ,32036512383 
+Genome_effective_length ,59128983 
+Change_rate , 6569887 
+
+# Change rate by chromosome
+
+Chromosome , Length , Changes , Change_rate 
+19 , 59128983 , 9 , 6569887
+
+# Variantss by type
+
+Type , Count , Percent 
+SNP , 9 , 100% 
+
+# Effects by impact
+
+Type , Count , Percent 
+LOW , 1 , 1.612903% 
+MODERATE , 2 , 3.225806% 
+MODIFIER , 59 , 95.16129% 
+
+# Effects by functional class
+
+Type , Count , Percent 
+MISSENSE , 1 , 50% 
+SILENT , 1 , 50% 
+
+Missense_Silent_ratio, 1
+
+# Count by effects
+
+Type , Count , Percent 
+3_prime_UTR_variant , 2 , 3.225806% 
+downstream_gene_variant , 9 , 14.516129% 
+intron_variant , 35 , 56.451613% 
+missense_variant , 1 , 1.612903% 
+non_coding_transcript_exon_variant , 1 , 1.612903% 
+sequence_feature , 1 , 1.612903% 
+synonymous_variant , 1 , 1.612903% 
+upstream_gene_variant , 12 , 19.354839% 
+
+# Count by genomic region
+
+Type , Count , Percent 
+DOWNSTREAM , 9 , 14.516129% 
+EXON , 3 , 4.83871% 
+INTRON , 35 , 56.451613% 
+TRANSCRIPT , 1 , 1.612903% 
+UPSTREAM , 12 , 19.354839% 
+UTR_3_PRIME , 2 , 3.225806% 
+
+# Quality 
+
+Values , 563,1467,2072,2740,2802,3176,3681,3728,3809
+Count , 1,1,1,1,1,1,1,1,1
+
+# InDel lengths
+
+
+# Base changes
+
+base  , A  , C  , G  , T 
+ A  , 0  , 1  , 0  , 0 
+ C  , 1  , 0  , 1  , 0 
+ G  , 1  , 0  , 0  , 2 
+ T  , 0  , 2  , 1  , 0 
+
+# Ts/Tv summary
+
+Transitions , 5
+Transversions , 9
+Ts_Tv_ratio , 0.555556
+
+# Ts/Tv : All variants
+
+Sample ,sample,Total
+Transitions ,5,5
+Transversions ,9,9
+Ts/Tv ,0.556,0.556
+
+
+# Ts/Tv : Known variants
+
+Sample ,sample,Total
+Transitions ,5,5
+Transversions ,9,9
+Ts/Tv ,0.556,0.556
+
+
+# Allele frequency
+
+# Allele frequency : All variants
+
+Values , 0,50,100
+Count , 1,2,6
+
+# Allele Count
+
+Values , 0,1,2
+Count , 1,2,6
+
+# Hom/Het table
+
+Sample_names , sample
+Reference , 0
+Het , 2
+Hom , 6
+Missing , 1
+
+
+# Codon change table
+	
+codons  , ACG  , ACT  , GGC  , TGC 
+ ACG   , 0  , 1  , 0  , 0 
+ ACT   , 0  , 0  , 0  , 0 
+ GGC   , 0  , 0  , 0  , 1 
+ TGC   , 0  , 0  , 0  , 0 
+
+# Amino acid change table
+
+aa  , C  , G  , T 
+ C , 0 , 0 , 0 
+ G , 1 , 0 , 0 
+ T , 0 , 0 , 1 
+
+# Chromosome change table
+
+19, Position,0,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000
+19,Count,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+

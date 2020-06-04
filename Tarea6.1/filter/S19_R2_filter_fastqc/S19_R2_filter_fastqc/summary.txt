@@ -1,0 +1,11 @@
+PASS	Basic Statistics	S19_R2_filter.fastq
+PASS	Per base sequence quality	S19_R2_filter.fastq
+PASS	Per tile sequence quality	S19_R2_filter.fastq
+PASS	Per sequence quality scores	S19_R2_filter.fastq
+WARN	Per base sequence content	S19_R2_filter.fastq
+WARN	Per sequence GC content	S19_R2_filter.fastq
+PASS	Per base N content	S19_R2_filter.fastq
+WARN	Sequence Length Distribution	S19_R2_filter.fastq
+FAIL	Sequence Duplication Levels	S19_R2_filter.fastq
+FAIL	Overrepresented sequences	S19_R2_filter.fastq
+PASS	Adapter Content	S19_R2_filter.fastq

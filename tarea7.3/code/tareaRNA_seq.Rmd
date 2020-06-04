@@ -9,7 +9,18 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-#### Preliminares
+#### **Introducción**
+
+El estudio de la expresión génica nos permite estudiar la respuesta de los organismos ante diferentes estímulos o condiciones ambientales y determinar cuáles genes están involucrados en esta respuesta. De igual manera, estos estudios nos permiten determinar el conjunto de genes que están activos en un determinado tejido de un organismo, o los genes que participan en algún estadío del desarrollo del mismo.
+
+En tiempos recientes, la principal herramienta para el estudio de la expresión génica ha sido la RNAseq. Esta hace uso de las tecnologías de secuenciación masiva, y presenta diferentes ventajas sobre otros métodos, por ejemplo, no solo permite evaluar los patrones de expresión génica, sino también la detección de variantes genéticas y de diferentes variantes de splicing, además de que tiene una mayor reproducibilidad que las tecnologías basadas en microarreglos (Costa-Silva et al., 2017). D
+
+De manera general, se puede hablar de cinco pasos en los estudios de RNAseq. El primero, consiste en la fragmentación de las muestras de material genético y su secuenciación en alguna plataforma de alto rendimiento. El segundo, consiste en el mapeo de los pequeños fragmentos secuenciados sobre algún genoma o transcriptoma de referencia. En tercer lugar, se estiman los niveles de expresión de cada uno de los genes o isoformas mapeados. En el cuarto paso, estos conteos deben ser normalizados, y posteriormente, pueden identificarse los genes diferencialmente expresados (DEG). Finalmente, en el quinto paso, los datos obtenidos deben ser evaluados en un contexto biológico (Costa-Silva et al., 2017).
+
+En esta trabajo, se evaluó la expresión diferencial de genes en dos cepas de bacterias que fueron cultivadas en dos medios diferentes, con el objetivo de detectar los DEG, así como el de determinar el principal conductor de la expresión diferencial, es decir, el genotipo o el medio de cultivo.
+
+
+#### **Preliminares**
 Definir los directorios de entrada y de salida.
 
 ```{r}
@@ -19,6 +30,7 @@ output_histogram <- file.path("..","diff_expr", "histograms")
 output_pvalue_fdr <- file.path("..","diff_expr", "pvalue_fdr") 
 output_table <- file.path("..","diff_expr", "tables")
 ```
+
 
 Comprobar si existe el directorio de entrada y crear los directorios de salida.
 
@@ -40,11 +52,13 @@ if(!file.exists(output_table)){
 }
 ```
 
-#### Cargar y procesar los datos de entrada
+
+#### **Cargar y procesar los datos de entrada**
 
 ```{r}
 library(edgeR)
 ```
+
 
 Leer datos de entrada y asignar nombres a las columnas
 
@@ -55,17 +69,20 @@ mut_p <- read.delim(file=file.path(input_dir, "0446_P.count"), sep="\t", header 
 mut_b <- read.delim(file=file.path(input_dir, "0446_B3.count"), sep="\t", header = F, check=F); colnames(mut_b) <- c("Gen_ID", "Count")
 ```
 
+
 Juntar los cuatro sets de datos
 
 ```{r}
 rawcounts <- data.frame(wild_p$Gen_ID, WildType_P = wild_p$Count, WildType_B = wild_b$Count, Mutant_P = mut_p$Count, Mutant_B = mut_b$Count, row.names = 1)
 ```
 
+
 Calcular RPKM
 
 ```{r}
 rpkm <- cpm(rawcounts)
 ```
+
 
 Remover las filas que no será utilizadas así como los genes con RPKM menores que 1 en tres de las cuatro librerías.
 
@@ -75,7 +92,8 @@ keep <- rowSums(rpkm > 1) >= 3 & !to_remove
 rawcounts <- rawcounts[keep,]
 ```
 
-#### Expresión diferencial para medios de cultivo
+
+#### **Expresión diferencial para medios de cultivo**
 
 Crear vector con el que se agrupará a las muestras de acuerdo con el medio de cultivo en el que se desarrollaron
 
@@ -83,17 +101,20 @@ Crear vector con el que se agrupará a las muestras de acuerdo con el medio de c
 group_culture <- c("planctonic","biofilm","planctonic","biofilm")
 ```
 
+
 Crear objeto DGE con el cual se realizarán los cálculos para identificar los genes expresados diferencialmente.
 
 ```{r}
 dge_culture <- DGEList(counts = rawcounts, group = group_culture)
 ```
 
+
 Se calculó el factor de normalización, el cuál se usó posteriormente para normalizar los conteos de acuerdo con el tamaño de cada librería.
 
 ```{r}
 dge_culture <- calcNormFactors(dge_culture)
 ```
+
 
 Se estimaron dos valores de dispersión: uno para cada gen y otro para cada librería, los cuales se utilizaron posteriormente para las pruebas estadísticas.
 
@@ -102,11 +123,13 @@ dge_culture <- estimateCommonDisp(dge_culture)
 dge_culture <- estimateTagwiseDisp(dge_culture)
 ```
 
+
 Se realizó la prueba de expresión diferencial, la cual utiliza un test exacto, que asume que los conteos siguen una distribución binomial negativa.
 
 ```{r}
 de_culture <- exactTest(dge_culture, pair = c("planctonic","biofilm"))
 ```
+
 
 Se obtuvo una tabla resumen de los resultados del test de expresión diferencial así como los ID de los genes que resultaron expresados diferencialmente.
 
@@ -116,12 +139,14 @@ results_culture <- results_culture$table
 ids_culture <- rownames(results_culture[results_culture$FDR < 0.1,])
 ```
 
-#### Expresión diferencial para cada genotipo
+
+#### **Expresión diferencial para cada genotipo**
 Se creó un set de datos que no consideraba los genes expresados diferencialmente por medio de cultivo.
 
 ```{r}
 rawcounts_genotype <- rawcounts[!rownames(rawcounts) %in% ids_culture,]
 ```
+
 
 Posteriormente se realizaron los mismos pasos que en la sección de expresión diferencial por medio de cultivo.
 
@@ -137,7 +162,8 @@ results_genotype <- results_genotype$table
 ids_genotype <- rownames(results_genotype[results_genotype$FDR < 0.1,])
 ```
 
-#### Resultados
+
+#### **Resultados y discusión**
 
 Se definieron vectores booleanos que, a partir del set completo de datos, etiquete a los genes que presentaron expresión diferencial y los que no, tanto por genotipo como por medio de cultivo.
 
@@ -146,11 +172,13 @@ de_genes_culture  <- rownames(rawcounts) %in% ids_culture
 de_genes_genotype <- rownames(rawcounts) %in% ids_genotype
 ```
 
+
 Se obtuvieron los pseudoconteos y se transformaron a escala logarítmica. Estos valores corresponden a los conteos normalizados por el tamaño de cada librería y fueron calculados en la etapa donde se aplicó la función ‘exactTest’.
 
 ```{r}
 pseudocounts <- data.frame(rownames(rawcounts), WildType_P = log10(dge_culture$pseudo.counts[,1]), WildType_B = log10(dge_culture$pseudo.counts[,2]), Mutant_P =  log10(dge_culture$pseudo.counts[,3]), Mutant_B = log10(dge_culture$pseudo.counts[,4]), DE_C = de_genes_culture, DE_G = de_genes_genotype, row.names = 1)
 ```
+
 
 Se graficaron los pseudoconteos para cada gen y se marcaron con color diferente aquellos que estuvieron diferencialmente expresados.
 
@@ -162,6 +190,7 @@ q<-plot(pseudocounts$Mutant_P, pseudocounts$Mutant_B, col = ifelse(pseudocounts$
 abline(lsfit(pseudocounts$Mutant_P, pseudocounts$Mutant_B), col = "black")
 ```
 
+
 ##### Por genotipo
 
 ```{r}
@@ -171,11 +200,16 @@ s<-plot(pseudocounts$WildType_B, pseudocounts$Mutant_B, col = ifelse(pseudocount
 abline(lsfit(pseudocounts$WildType_B, pseudocounts$Mutant_B), col = "black")
 ```
 
+Como se observa en las gráficas anteriores, el medio de cultivo tuvo un efecto importante a la hora de determinar la expresión diferencial de los genes, ya que se observa un gran número de DEG's para ambos genotipos, tanto para el medio biofilm como para el medio bentónico. Por otro lado se observó muy poco efecto para el caso del genotipo, ya que este condujo solamente a un DEG, independientemente del medio de cultivo.
+
+
 ##### Histograma de valores P
 ```{r}
 t<-hist(x = results_culture$PValue, col = "skyblue", border = "blue", main = "Culture", xlab = "P-value", ylab = "Frequency", cex.main = 1.3, cex.lab = 1.3, cex.axis = 1.2)
 u<-hist(x = results_genotype$PValue, col = "skyblue", border = "blue", main = "Genotype", xlab = "P-value", ylab = "Frequency", cex.main = 1.3, cex.lab = 1.3, cex.axis = 1.2)
 ```
+
+Lo anterior se confirma al observar los histogramas de valores P para ambos factores, ya que el factor "medio de cultivo" presenta una acumulación de valores P pequeños, mientras que el factor genotipo presenta una ditribución uniforme o aplanada entre distintos valores de P.
 
 ##### Valores P vs. FDR
 
@@ -184,4 +218,13 @@ v<-plot(results_culture$PValue, results_culture$FDR, col = "blue", main = "Cultu
 w<-plot(results_genotype$PValue, results_genotype$FDR, col = "blue", main = "Genotype", xlab = "P-value", ylab = "FDR", cex.main = 1.3, cex.lab = 1.3, cex.axis = 1.2, las = 01)
 ```
 
+Finalmente, en esta gráfica se observa que el medio de cultivo presenta una relación más o menos lineal entre el valor P y el False Discovery Rate (FDR), lo cual permite determinar adecuadamente un corte en los valores P para tener un determinado FDR. Por su parte, el factor genotipo no permite realizar este corte y por lo tanto, no se puede establecer un FDR adecuado para este factor. 
 
+Con lo anterior queda claro que el medio de cultivo es un factor determinante en la expresión génica de estas bacterias, independientemnte de su genotipo. 
+
+#### **Citas**
+Costa-Silva J, Domingues D, Lopes FM
+(2017) RNA-Seq differential expression analysis:
+An extended review and a software tool. PLoS ONE
+12(12): e0190152. https://doi.org/10.1371/journal.
+pone.0190152
